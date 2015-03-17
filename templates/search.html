@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+    <table width="100%"><tr>
+        <td><p>United States Holocaust Memorial Museum has: {{ museum['count'] }} results for <b>{{ query }}</b></p>
+        <p><a href = "{{museum['count']}}">View them</a></p></td>
+        <td><p>National Archives has: {{ arch['count'] }} results for <b>{{ query }}</b></p>
+        <p><a href = "{{arch['count']}}">View them</a></p></td>
+        <tr><td><p>State Archives in Belgium {{ bel }} results for <b>{{ query }}</b></p>
+        <p>You can send them email for the records</p></td></tr>
+    </tr></table>
+{% endblock %}

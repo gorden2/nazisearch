@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<title>Search</title>
+<script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<style type="text/css">
+        input.text {width:200px; margin-left:20px}
+        .container {max-width:800px;margin:auto;}
+
+</style>
+</head>
+
+<body>
+<div class = "container">
+<form method=POST action="{{ url_for('search') }}">
+Search:
+<input type="text" class="text" name="search"/>
+<input type="submit" value="search"/>
+</form>
+{% block body %}{% endblock %}
+</div>
+</body>
+</html>
