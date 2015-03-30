@@ -1,11 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
-    <table width="100%"><tr>
-        <td><p>United States Holocaust Memorial Museum has: {{ museum['count'] }} results for <b>{{ query }}</b></p>
-        <p><a href = "{{museum['count']}}">View them</a></p></td>
-        <td><p>National Archives has: {{ arch['count'] }} results for <b>{{ query }}</b></p>
-        <p><a href = "{{arch['count']}}">View them</a></p></td>
-        <tr><td><p>State Archives in Belgium {{ bel }} results for <b>{{ query }}</b></p>
-        <p>You can send them email for the records</p></td></tr>
-    </tr></table>
+    <h3>Result for <b>"{{ query }}"</b> :</h3>
+    <div style="border:1px solid black; border-radius: 25px;overflow:auto;margin:auto;position:relative;width:690px;">
+        <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
+            <p><b>United States Holocaust Memorial Museum</b></p>
+            <p>{{ museum['count'] }} results</p>
+            <p><a href = "{{museum['url']}}">View them</a></p>
+        </div>
+        <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
+            <p><b>National Archives</b></p>
+            <p>{{ arch['count'] }} results</p>
+            <p><a href = "{{arch['url']}}">View them</a></p>
+        </div>
+        <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
+            <p><b>State Archives in Belgium</b></p>
+            <p>{{ bel }} results</p>
+            <p>You can send them email for the records</p>
+        </div>
+    </div>
 {% endblock %}

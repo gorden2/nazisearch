@@ -3,25 +3,325 @@
 <head>
 <title>Search</title>
 <script type="text/javascript"
-  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
   var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 <style type="text/css">
+        body {
+            font-family: Arial,Verdana, sans-serif;
+            background: url(http://www.archives.gov/global-images/layout/gradient-page-bg.jpg) repeat-x left bottom #e2e9f6;}
+        div {display:block;}
         input.text {width:200px; margin-left:20px}
-        .container {max-width:800px;margin:auto;}
+        .container {width:960px;margin:auto;border-left: #a4abb3 1px dotted;border-right: #a4abb3 1px dotted;padding:0;}
+        .header img {margin-right:10px}
+        .col-md-4 {width: 192px;padding: 30px 20px 0px 20px;font-size: 0.75em;background-color: #f9f7f4;  margin-bottom: -99999px;
+                    padding-bottom: 99999px;}
+        .col-md-4 h3 {border-bottom: 1px dotted #999;
+                    font-size: 1em;
+                    font-weight: bold;
+                    padding-bottom: 5px;
+                    margin-bottom:1.2em;
+                    text-transform: none;
+                    color: #28393b; text-decoration: none; margin-bottom: 12px; overflow: hidden;}
+        .col-md-8{
+                background-color:white;
+                height:100%;
+                width: 765px;
+                padding: 30px 20px 30px 20px;
+                position: relative;
+                border-left: #a4abb3 1px dotted;}
+        .col-md-4 ul, .col-1 ol {
+                margin-left: 0px;
+                padding: 0px;
+                margin-bottom: 18px;
+                list-style: none;
+                }
+        .col-md-8 p{
+                font-size:1em;
+
+                }
+        .col-md-8 table{
+                border-collapse: collapse;
+                border-spacing: 0;
+                border: 1px solid #555;
+                margin: 10px 0;
+                }
+        h1 {
+            font-family: Arial, sans-serif;
+            padding-bottom: 0px;
+            font-size: 1.7em;
+            }
+        table th {
+            background-color: #566b6f;
+            color: #fff;
+            font-weight: normal;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: .9em;
+            }
+        #bottomBanner {
+            background-color: rgb(91, 102, 134);
+            line-height: 24px;
+            color: #fff;
+            padding-left: 20px;
+            margin: auto;
+            font-family: Arial,Verdana, sans-serif;
+            /* font-family: georgia; */
+            font-weight: normal;
+            border-left: #a4abb3 1px dotted;
+            border-right: #a4abb3 1px dotted;
+            }
+        #footer {
+            position: relative;
+            margin: auto;
+            width: 960px;
+            padding: 20px;
+            background: #f5f4f3;
+            clear: both;
+            border-left: #a4abb3 1px dotted;
+            border-right: #a4abb3 1px dotted;
+            border-bottom: #a4abb3 1px dotted;
+            overflow: hidden;
+            font-size: 0.7em;
+            }
+        #footer .menu div {
+            float: left;
+            margin: 0px;
+            max-width: 168px;
+            min-width: 90px;
+            margin-left: 19px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+
+            }
+
+        #footer .connect {
+            float: right;
+            margin-right: 20px;
+            }
+        #footer .menu h3 {
+            color: #464647;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 0px;
+            margin-bottom: 8px;
+            }
+
+        #footer .menu ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            margin-bottom: 10px;
+            }
+        #footer .menu ul li {
+            font-family: Tahoma, Arial, Helvetica, sans-serif;
+            line-height: 1em;
+            padding: .4em 0em;
 
 </style>
 </head>
 
 <body>
 <div class = "container">
-<form method=POST action="{{ url_for('search') }}">
-Search:
-<input type="text" class="text" name="search"/>
-<input type="submit" value="search"/>
-</form>
-{% block body %}{% endblock %}
+    <div class="header"><img src="static/header.png"/></div>
+    <div class="row" style="margin:auto;overflow:hidden;height:auto;">
+        <div class="col-xs-4 col-md-4">
+            <h3>International Research Portal for Records Related to Nazi-Era Cultural Property</h3>
+            <ul>
+	            <li class="youAreHere">Main Page</li>
+    	        <li><a href="http://www.archives.gov/research/holocaust/international-resources/glossary-sort.html">Browse Search Terms</a></li>
+	            <li><a href="http://www.archives.gov/research/holocaust/international-resources/whats-new.html">What's New</a></li>
+	            <li><a href="http://www.archives.gov/research/holocaust/international-resources/other-resources.html">Other Resources</a></li>
+                <li><a href="http://www.archives.gov/research/holocaust">Holocaust-Era Assets Main Page</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-8 col-md-8">
+            <div style="padding:0em; margin-bottom:0px; margin-top:-25px; border:1px solid #E4E5E6; border-bottom-color:#C2C3C4; border-left-color:#C2C3C4; border-right-color:#C2C3C4;border-top-color:#C2C3C4; background-color:#F4F6F7; background-image:url(http://www.archives.gov/global-images/layout/boxed-1-bg.gif); background-repeat:repeat-x; padding:.5em; font-size:.7em; float:right; position:relative;">
+                <a href="http://www.archives.gov/research/holocaust/international-resources/">English</a> &nbsp;| &nbsp;
+                <a href="http://www.archives.gov/research/holocaust/international-resources/german.html"><span lang="de" xml:lang="de">Deutsch</span></a> &nbsp;| &nbsp;
+                <a href="http://www.archives.gov/research/holocaust/international-resources/french.html"><span lang="fr" xml:lang="fr">Français</span></a> &nbsp;| &nbsp;
+                <!-- TEXT VERSION  <a href="/research/holocaust/international-resources/uk/">Ð£ÐºÑ€Ð°Ñ—Ð½ÑÑŒÐºÐ°</a> -->
+                <a href="http://www.archives.gov/research/holocaust/international-resources/uk.html"><span lang="uk" xml:lang="uk">Українська</span></a>
+            </div>
+            <h1 style="margin-top: 10px;font-family: Arial, sans-serif;padding-bottom: 0px;font-size: 1.7em; margin-top:10px;">International Research Portal for Records<br> Related to Nazi-Era Cultural Property</h1>
+            <p>The International Research Portal is a collaboration of national and other archival institutions with records that pertain to Nazi-Era cultural property. These archival institutions, along with expert national and international organizations, are working together to extend public access to the widely-dispersed records through this single internet Portal. The Portal enables families to research their losses; provenance researchers to locate important documentation; and historians to study newly accessible materials on the history of this period. This collaborative project was established to fulfill the objectives of the <a href="//www.state.gov/p/eur/rt/hlcst/122038.htm">1998 Washington Conference Principles on Nazi-Confiscated Art</a>, the <a href="//www.lootedart.com/MFV7EE39608">2000 Vilnius Forum Declaration</a> and the <a href="//www.state.gov/p/eur/rls/or/126162.htm">2009 Terezin Declaration</a>, particularly to make all such records publicly accessible.</p>
+            <p>The Portal links researchers to archival materials consisting of descriptions of records and, in many cases, digital images of the records that relate to cultural property that was stolen, looted, seized, forcibly sold, or otherwise lost during the Nazi era. These records, which are in many different languages, include Nazi documentation, governmental records from 1933 onwards, inventories of recovered artworks, post-war claims records and auction house and art dealer records. Cultural property documented in these records covers a broad range from artworks to books and libraries, religious objects, antiquities, archival documents, carvings, silver and more.</p>
+            <p>Each link below directs users to descriptions of the relevant records available at each participating institution and provides information on accessing the records. Also included are further links to finding aids and digitized records, as available. All descriptions within the Portal are provided in English. As you click through the Portal to affiliated websites, the descriptions are written in the national language of each institution, and in some instances, are available in English, as well.</p>
+                <form method=POST action="{{ url_for('search') }}">
+                Search:
+                <input type="text" class="text" name="search"/>
+                <input type="submit" value="search"/>
+                </form>
+
+                {% block body %}{% endblock %}
+            <br/>
+            <table style="width: 100%;">
+                <tbody><tr><th colspan="2"><h1 style="margin-top: 0px; margin-bottom: 0px; color: #fff;">Search Records of Participating Institutions</h1></th></tr>
+                <tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/nara/" target="_blank">The National Archives of the United States</a></td>
+	            <td><img src="static/logo-nara.png" alt="NARA logo" style="border:0;"></td></tr>
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/bundesarchiv.html" target="_blank">Bundesarchiv (The Federal Archives of Germany)</a></td>-->
+	            <!--<td><img src="static/logo-bundesarchiv.png" alt="German National Archives logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/archives-uk.html" target="_blank">The National Archives of the United Kingdom</a></td>-->
+	            <!--<td><img src="static/logo-tna.png" alt="United Kingdom National Archives logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/france.html" target="_blank">France Diplomatie: Diplomatic Archive Center of the Ministry of Foreign and European Affairs</a></td>-->
+	            <!--<td><img src="static/logo-france-diplomatie.png" alt="Diplomatic Archive Center of the Ministry of Foreign and European Affairs logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/tsdavo.html" target="_blank">Central State Archive of Supreme Bodies of Power and Government of Ukraine (TsDAVO)</a></td>-->
+	            <!--<td><img src="static/logo-tsdavo.png" alt="TsDAVO of Ukraine logo" style="border:0;"></td></tr>-->
+
+                <tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/belgium.html" target="_blank">State Archives in Belgium</a></td>
+	            <td><img src="static/logo-state-archives-belgium.png" alt="State Archives in Belgium logo" style="border:0;"></td></tr>
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/archives-uk.html" target="_blank">Commission for Looted Art in Europe (CLAE)</a></td>-->
+	            <!--<td><img src="static/logo-clae.png" alt="Commission for Looted Art in Europe logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/claims-con-ushmm.html" target="_blank">Claims Conference (Conference on Jewish Material Claims Against Germany)</a></td>-->
+	            <!--<td><img src="static/logo-claims-con.png" alt="Claims Conference logo" style="border:0;"></td></tr>-->
+
+                <tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/claims-con-ushmm.html" target="_blank">United States Holocaust Memorial Museum</a></td>
+	            <td><img src="static/logo-ushmm.png" alt="United States Holocaust Memorial Musuem logo" style="border:0;"></td></tr>
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/dhm.html" target="_blank">Deutsches Historisches Museum (German Historical Museum)</a></td>-->
+	            <!--<td><img src="static/logo-dhm.png" alt="Deutsches Historisches Museum logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/memorial-shoah.html" target="_blank">Mémorial de la Shoah</a></td>-->
+	            <!--<td><img src="static/logo-memorial-shoah.png" alt="Memorial de la Shoah logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/niod.html" target="_blank">NIOD Institute for War, Holocaust and Genocide Studies (Netherlands)</a></td>-->
+	            <!--<td><img src="static/niod.jpg" alt="NIOD logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/italy.html" target="_blank">Italian Directorate General of Archives</a></td>-->
+	            <!--<td><img src="static/italy.jpg" alt="Italy logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/getty.html" target="_blank">The Getty Research Institute</a></td>-->
+	            <!--<td><img src="static/getty.jpg" alt="Getty logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/landesarchiv.html" target="_blank">Landesarchiv Berlin (Berlin State Archive)</a></td>-->
+	            <!--<td><img src="static/landesarchiv.jpg" alt="Landesarchiv logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/austria.html">National Fund of the Republic of Austria for Victims of National Socialism and the General Settlement Fund for Victims of National Socialism</a></td>-->
+	            <!--<td><img src="static/austria.png" alt="Austria logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/heidelberg.html" target="_blank">Heidelberg University Library</a></td>-->
+                <!--<td><img src="static/heidelberg.png" alt="NIOD logo" style="border:0;"></td></tr>-->
+
+                <!--<tr style="border: 1px solid #e6e6e6;"><td><a href="http://www.archives.gov/research/holocaust/international-resources/gnm.html" target="_blank">Deutsches Kunstarchiv im Germanischen Nationalmuseum</a></td>-->
+	            <!--<td><img src="static/gnm-logo.png" alt="Germanisches Nationalmuseum logo" style="border:0;"></td></tr>-->
+                </tbody>
+            </table>
+        </div>
+     </div>
+    <div id="bottomBanner">
+	International Research: Nazi-Era Cultural Property &gt;</div>
+    <div id="footer">
+
+<!--stopindex-->
+
+<div class="menu connect">
+
+<h3>Connect With Us</h3>
+<ul>
+	<li>
+		<a href="/social-media/blogs.html" title="Blogs">
+		<img src="static/icon-blogs.gif" alt="Go to blog">
+		Blogs
+		</a>
+	</li>
+ 	<li>
+		<a href="/social-media/facebook.html" title="Facebook">
+		<img src="static/icon-facebook.gif" alt="Go to Facebook">
+		Facebook
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/flickr.html" title="Flickr">
+		<img src="static/icon-flickr.gif" alt="Go to Flickr">
+		Flickr
+		</a>
+	</li>
+    <!--
+	<li>
+		<a href="/global-pages/exit.html?link=http://naraopengov.ideascale.com" title="IdeaScale">
+		<img src="/global-images/icons/connect/icon-ideascale.gif" alt="Go to IdeaScale" />
+		IdeaScale
+		</a>
+	</li>-->
+	<li>
+		<a href="/social-media/rss-feeds.html" title="RSS Feeds">
+		<img src="static/icon-rss-feeds.gif" alt="Get RSS Feed">
+		RSS Feeds
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/twitter.html" title="Twitter">
+		<img src="static/icon-twitter-2.gif" alt="Go to Twitter">
+		Twitter
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/youtube.html" title="YouTube">
+		<img src="static/icon-youtube.gif" alt="Go to YouTube">
+		YouTube
+		</a>
+	</li>
+    <li>
+   	<a href="/social-media/">More...</a></li>
+</ul>
+</div>
+<div class="menu">
+
+<div>
+    <h3>Online Research</h3>
+    <ul>
+      <li><a href="/research/topics/">By Topic</a></li>
+      <li><a href="/research/start/by-format.html">By Media Type</a></li>
+      <li><a href="/research/start/by-organization.html">By Government Organization</a></li>
+       <li><a href="/research/search/">Online Catalog</a></li>
+      <li><a href="/presidential-libraries/research/">Presidential Materials</a></li>
+      <li><a href="http://aad.archives.gov/aad/">Access to Archival Databases</a></li>
+
+      <li><a href="/research/alic/">Archives Library Information Center</a></li>
+      <li><a href="/exhibits/">Online Exhibits</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Resources For…</h3>
+    <ul>
+      <li><a href="/research/genealogy/">Genealogists</a></li>
+     <li><a href="/research/military/">Military Historians</a></li>
+     <li> <a href="/preservation">Preservation and Archives Professionals</a></li>
+     <li><a href="/records-mgmt">Records Managers</a></li>
+    <li><a href="/research/military/veterans/">Veterans</a></li>
+    </ul>
+
+  </div>
+  <div>
+    <h3>Research Guides</h3>
+    <ul>
+      <li><a href="/research/start/">Getting Started</a></li>
+      <li><a href="/research/guide-fed-records/">Guide to Federal Records</a></li>
+      <li><a href="/research/declassification.html">Declassified Records</a></li>
+      <li><a href="/research/start/online-tools.html">Where to Look for Records</a></li>
+      <li><a href="/research/start/">Why Aren't All Records Online?</a></li>
+    </ul>
+  </div>
+  <div>
+      <h3>What's New</h3>
+    <ul>
+      <li><a href="/research/news.html">News and Notices</a></li>
+      <li><a href="/research/accessions/">New Acquisitions</a></li>
+      <li><a href="/research/newsletter/">Researcher News: Newsletter</a></li>
+    </ul>
+
+
+  </div></div>
+</div>
 </div>
 </body>
 </html>
