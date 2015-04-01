@@ -13,25 +13,32 @@ def clean():
     inv={}
     inv["content"]=""
     invs=[]
+    
+    # category
+    cate1 = ""
+    cate2 = ""
     for line in text:
         # find I cat
-        for cat in cat1:
-            if re.match(r".*"+cat,line):
-                inv["cat1"] = cat
-                flag = False
-                break
-
+        if len(cat1)>0:
+			if re.match(r".*"+cat1[0],line):
+				cate1 = cat1.pop(0)
+				flag = False
+		
         # find A cat
         if re.match(r"[A-D]\.",line):
-            inv["cat2"] = line
+            cate2 = line
             flag = False
-
+		
         # find docid
         if re.match(str(i) + '\.',line):
             inv["id"] = i-1
+            inv["cate1"] =cate1
+            inv["cate2"] = cate2
             invs.append(inv)
-            inv={}
+            inv = {}
             inv["content"]=""
+            inv["cate1"] =cate1
+            inv["cate2"] = cate2
             i+=1
             flag = True
 
@@ -40,17 +47,19 @@ def clean():
     return invs[1:]
 
 
-# def parse3(inputs):
-#     with open("bel.txt") as f:
-#         text = f.readlines()
-#     print text[:10]
-    # pattern = re.compile(r"\b"+inputs+r"\b",flags=re.I)
-    # if re.search(pattern, text):
-    #     print "Yes"
-    # else:
-    #     print "No"
+def parse3(inputs):
+    dics = clean()
+    pattern = re.compile(r"\b"+inputs+r"\b",flags=re.I)
+    ids = []
+    for dic in dics:
+		text = dic["content"]
+		if re.search(pattern, text):
+			ids.append(dic["id"])
+	
+    if len(ids)>0:
+		print len(ids)
+		for id in ids:
+			print dics[id-1]
 
 
-a = json.dumps(clean())
-with open("test.json",'w') as f:
-    f.write(a)
+parse3("belgian")
