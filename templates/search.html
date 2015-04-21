@@ -5,17 +5,23 @@
         <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
             <p><b>United States Holocaust Memorial Museum</b></p>
             <p>{{ museum['count'] }} results</p>
-            <p><a href = "{{museum['url']}}">View them</a></p>
+            <p><a href = "{{museum['url']}}" target="_blank">View them</a></p>
         </div>
         <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
             <p><b>National Archives</b></p>
             <p>{{ arch['count'] }} results</p>
-            <p><a href = "{{arch['url']}}">View them</a></p>
+            <p><a href = "{{arch['url']}}" target="_blank">View them</a></p>
         </div>
         <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
-            <p><b>State Archives in Belgium</b></p>
-            <p>{{ bel }} results</p>
+            <p style="margin-bottom:0px"><b>State Archives in Belgium</b></p>
+            <a href = "{{ url_for('adsearch') }}" target="_blank">Advanced Search</a>
+            <p>{{ bel['count'] }} results</p>
             <p>You can send them email for the records</p>
+        </div>
+        <div class="result" style="border:1px solid black; border-radius: 25px; width:320px; padding:1em 1em 1em 1em;float:left;height:120px;margin:10px 10px 10px 10px;">
+            <p><b>The Getty Research Institute</b></p>
+            <p>{{ getty['count'] }} results</p>
+            <p><a href = "{{getty['url']}}" target="_blank">View them</a></p>
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,429 @@
+<!doctype html>
+<html>
+<head>
+<title>AdSearch</title>
+<script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      function detail(item){
+            $(".col-xs-8").children().hide();
+            $(".col-xs-8").append("<h3 class='detail'>Detail for id: " +item+ "</h3>");
+            {% for result in results %}
+                if ({{result["id"]}} == item)
+                {
+
+                    $(".col-xs-8").append("<table class='detail' width=100% style='border-style:None;'>\
+                                                <tr><td width=20%><b>ID:</b></td><td>{{result['id']}}</td></tr>\
+                                                <tr><td width=20%><b>Content:</b></td><td>{{result['detail']}}</td></tr>\
+                                                <tr><td width=20%><b>Year:</b></td><td>{{result['date']}}</td></tr>\
+                                                <tr><td width=20%><b>Type:</b></td><td>{{result['type']}}</td></tr>\
+                                                <tr><td width=20%><b>Quantity:</b></td><td>{{result['quantity']}}</td></tr>\
+                                                <tr><td width=20%><b>Collection:</b></td><td>{{result['collection']}}</td></tr>\
+                                                <tr><td width=20%><b>Note:</b></td><td>{{result['cnote']}}</td></tr>\
+                                                <tr><td width=20%><b>Series:</b></td><td>{{result['series']}}</td></tr>\
+                                                <tr><td width=20%><b>Item note:</b></td><td>{{result['lnote']}}</td></tr>\
+                                            </table>");
+                }
+            {% endfor %}
+            $(".col-xs-8").append("<a href='#' onclick='show()' class ='detail'>Back</a>");
+      }
+
+      function show(){
+        $(".col-xs-8").children().show();
+        $(".detail").remove();
+      }
+
+      function showopt(){
+        $(".s").remove();
+        if ($("[name='title']").val()=="I. ADMINISTRATIVE SERVICES"){
+            $("[name='series']").append('<option class="s" value="A. General">A. General</option>\
+                                <option class="s" value="B. Administrative functioning">B. Administrative functioning</option>\
+                                <option class="s" value="1. Personnel management">-> 1. Personnel management</option>\
+                                <option class="s" value="2. Bookkeeping and supplies service (economaat/économat)">-> 2. Bookkeeping and supplies service (economaat/économat)</option>\
+                                <option class="s" value="3. Administration of the management board">-> 3. Administration of the management board</option>');
+
+        }
+        if ($("[name='title']").val()=="II. MANAGEMENT BOARD"){
+
+            $("[name='series']").append('<option class="s" value="A. Governing committee of the DIV/OIL">A. Governing committee of the DIV/OIL</option>\
+                        <option class="s" value="1. Series of handwritten minutes">-> 1. Series of handwritten minutes</option>\
+                        <option class="s" value="2. Series of minutes in files">-> 2. Series of minutes in files</option>\
+                        <option class="s" value="B. Management board of the DER">B. Management board of the DER</option>\
+                        <option class="s" value="1. Series of handwritten minutes">-> 1. Series of handwritten minutes</option>\
+                        <option class="s" value="2. Series of minutes in files">-> 2. Series of minutes in files</option>\
+                        <option class="s" value="3. Series of minutes in files">-> 3. Series of minutes in files</option>\
+                        <option class="s" value="4. Appendices to the minutes of the management board">-> 4. Appendices to the minutes of the management board</option>\
+                        ');
+        }
+        if ($("[name='title']").val()=="III. DIRECTORATE RECOVERY"){
+             $("[name='series']").append('<option class="s" value="A. Recovery of looted artworks">A. Recovery of looted artworks</option>\
+                                            <option class="s" value="1. Coordination of the restitution policy">-> 1. Coordination of the restitution policy</option>\
+                                            <option class="s" value="2. Classification of data">-> 2. Classification of data</option>\
+                                            <option class="s" value="B. Recovery of ships and cargo">B. Recovery of ships and cargo</option>\
+                                            <option class="s" value="1. Elaboration of the jurisprudence regarding recovery">-> 1. Elaboration of the jurisprudence regarding recovery</option>\
+                                            <option class="s" value="2. Handling recovery requests">-> 2. Handling recovery requests</option>\
+                                            <option class="s" value="C. Restitution of foreign exchanges">C. Restitution of foreign exchanges</option>');
+        }
+        if ($("[name='title']").val()=="IV. DIRECTORATE REPARATIONS"){
+             $("[name='series']").append('<option class="s" value="A. Contacts with the IARA">A. Contacts with the IARA</option>\
+                                <option class="s" value="1. General" >-> 1. General</option>\
+                                <option class="s" value="2. Belgian delegation to the IARA" >-> 2. Belgian delegation to the IARA</option>\
+                                <option class="s" value="B. Administration of goods from reparations" >B. Administration of goods from reparations</option>\
+                                <option class="s" value="1. General administration">-> 1. General administration</option>\
+                                <option class="s" value="2. Sale and allocation of goods to the private sector" >-> 2. Sale and allocation of goods to the private sector</option>\
+                                ');
+        }
+        if ($("[name='title']").val()=="V. DIRECTORATE GOVERNMENT OPERATIONS"){
+             $("[name='series']").append('<option class="s" value="A. Domestic market">A. Domestic market</option>\
+                                <option class="s" value="1. Gathering information about the Belgian coal industry">-> 1. Gathering information about the Belgian coal industry</option>\
+                                <option class="s" value="2. Support to Belgian flax industry">-> 2. Support to Belgian flax industry</option>\
+                                <option class="s" value="B. Foreign relations">B. Foreign relations</option>\
+                                <option class="s" value="1. East-Germany ">-> 1. East-Germany </option>\
+                                <option class="s" value="2. Turkey">-> 2. Turkey</option>');
+        }
+      }
+
+
+</script>
+<style type="text/css">
+        body {
+            font-family: Arial,Verdana, sans-serif;
+            background: url(http://www.archives.gov/global-images/layout/gradient-page-bg.jpg) repeat-x left bottom #e2e9f6;}
+
+        div {display:block;}
+        input.text {width:200px; margin-left:20px}
+        .container {width:960px;margin:auto;border-left: #a4abb3 1px dotted;border-right: #a4abb3 1px dotted;padding:0;}
+        .header img {margin-right:10px}
+        .col-md-4 {width: 192px;padding: 30px 20px 0px 20px;font-size: 0.75em;background-color: #f9f7f4;  margin-bottom: -99999px;
+                    padding-bottom: 99999px;}
+        .col-md-4 h3 {border-bottom: 1px dotted #999;
+                    font-size: 1em;
+                    font-weight: bold;
+                    padding-bottom: 5px;
+                    margin-bottom:1.2em;
+                    text-transform: none;
+                    color: #28393b; text-decoration: none; margin-bottom: 12px; overflow: hidden;}
+        .col-md-8{
+                background-color:white;
+                height:100%;
+                width: 765px;
+                padding: 30px 20px 30px 20px;
+                position: relative;
+                border-left: #a4abb3 1px dotted;}
+        .col-md-4 ul, .col-1 ol {
+                margin-left: 0px;
+                padding: 0px;
+                margin-bottom: 18px;
+                list-style: none;
+                }
+        .col-md-8 p{
+                font-size:1em;
+
+                }
+        .col-md-8 table{
+                border-collapse: collapse;
+                border-spacing: 0;
+                border: 1px solid #555;
+                margin: 10px 0;
+                }
+        h1 {
+            font-family: Arial, sans-serif;
+            padding-bottom: 0px;
+            font-size: 1.7em;
+            }
+        table th {
+            background-color: #566b6f;
+            color: #fff;
+            font-weight: normal;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: .9em;
+            }
+        #bottomBanner {
+            background-color: rgb(91, 102, 134);
+            line-height: 24px;
+            color: #fff;
+            padding-left: 20px;
+            margin: auto;
+            font-family: Arial,Verdana, sans-serif;
+            /* font-family: georgia; */
+            font-weight: normal;
+            border-left: #a4abb3 1px dotted;
+            border-right: #a4abb3 1px dotted;
+            }
+
+        #footer {
+            position: relative;
+            margin: auto;
+            width: 960px;
+            padding: 20px;
+            background: #f5f4f3;
+            clear: both;
+            border-left: #a4abb3 1px dotted;
+            border-right: #a4abb3 1px dotted;
+            border-bottom: #a4abb3 1px dotted;
+            overflow: hidden;
+            font-size: 0.7em;
+            }
+        #footer .menu div {
+            float: left;
+            margin: 0px;
+            max-width: 168px;
+            min-width: 90px;
+            margin-left: 19px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+
+            }
+
+        #footer .connect {
+            float: right;
+            margin-right: 20px;
+            }
+        #footer .menu h3 {
+            color: #464647;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 0px;
+            margin-bottom: 8px;
+            }
+
+        #footer .menu ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            margin-bottom: 10px;
+            }
+        #footer .menu ul li {
+            font-family: Tahoma, Arial, Helvetica, sans-serif;
+            line-height: 1em;
+            padding: .4em 0em;
+            }
+
+        table.adsearch td {
+            padding:5px 10px 5px 0px;
+            vertical-align:top;
+            }
+        table.adsearch select {
+            padding:1px 0px;
+            margin-left:20px;
+            -webkit-appearance: menulist-button;
+            height:26px;
+            }
+        .results td{
+            border: 1px solid #e6e6e6;
+            }
+        .detail td {
+            padding:5px 10px 5px 0px;
+            vertical-align:center;
+            border: 1px solid #e6e6e6;
+            }
+
+
+</style>
+</head>
+
+<body>
+<div class = "container">
+    <div class="header"><img src="static/header.png"/></div>
+    <div class="row" style="margin:auto;overflow:hidden;height:auto;">
+        <div class="col-xs-4 col-md-4">
+            <h3>International Research Portal for Records Related to Nazi-Era Cultural Property</h3>
+            <ul>
+	            <li class="youAreHere">Main Page</li>
+    	        <li><a href="http://www.archives.gov/research/holocaust/international-resources/glossary-sort.html">Browse Search Terms</a></li>
+	            <li><a href="http://www.archives.gov/research/holocaust/international-resources/whats-new.html">What's New</a></li>
+	            <li><a href="http://www.archives.gov/research/holocaust/international-resources/other-resources.html">Other Resources</a></li>
+                <li><a href="http://www.archives.gov/research/holocaust">Holocaust-Era Assets Main Page</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-8 col-md-8">
+            <form method=POST action="{{ url_for('advsearch') }}">
+                <h3>Advanced Search</h3>
+                <table width="100%" style="border-style:None;" class="adsearch">
+                    <tr><td>Search By Content:</td>
+                        <td>
+                            <input type="text" class="text" name="text"/>
+                        </td></tr>
+
+                    <tr><td>Search By Year:</td>
+                        <td>
+                            <input type="text" class="text" name="date"/>
+                        </td></tr>
+
+                    <tr><td>Search By Name:</td>
+                        <td>
+                            <input type="text" class="text" name="name"/>
+                        </td></tr>
+
+                    <tr><td>Search By Category:</td>
+                        <td>
+                            <select name = "title" onchange="showopt()">
+                                <option value="">Any</option>>
+                                <option value="I. ADMINISTRATIVE SERVICES">ADMINISTRATIVE SERVICES</option>
+                                <option value="II. MANAGEMENT BOARD">MANAGEMENT BOARD</option>
+                                <option value="III. DIRECTORATE RECOVERY">DIRECTORATE RECOVERY</option>
+                                <option value="IV. DIRECTORATE REPARATIONS">DIRECTORATE REPARATIONS</option>
+                                <option value="V. DIRECTORATE GOVERNMENT OPERATIONS">DIRECTORATE GOVERNMENT OPERATIONS</option>
+                                <option value="VI. ARCHIVES MANAGEMENT AT THE COMMERCIAL OFFICE FOR PROVISIONING AND THE BELGIAN OFFICE FOR ECONOMY AND AGRICULTURE (BDBL/OBEA)">ARCHIVES MANAGEMENT AT THE COMMERCIAL</option>
+                                <option value="VII. ARCHIVAL DOCUMENTS WITH NO SPECIFIC RELATION">ARCHIVAL DOCUMENTS WITH</option>
+
+                            </select>
+                        </td></tr>
+
+                    <tr><td>Search By Series:</td>
+                        <td>
+                            <select name = "series" style="min-width:430px">
+                                <option value="">Any</option>
+
+
+
+
+                            </select>
+                        </td></tr>
+
+                    <tr><td>Search By Type:</td>
+                        <td>
+
+                            <select name = "type">
+                                <option value="">Any</option>>
+                                <option value="bundle">bundle</option>
+                                <option value="envelope">envelope</option>
+                                <option value="document">document</option>
+                                <option value="volume">volume</option>
+                                <option value="box">box</option>
+                                <option value="other">other</option>
+                            </select>
+
+                        </td></tr>
+                </table>
+
+                <center><input type="submit" value="search"/></center>
+
+            </form>
+            {% if results %}
+            <table class="results" width=100% style="text-align:center; ">
+                <tr style = "background-color: #566b6f;font-family: Arial, sans-serif;color: white;">
+                    <td width=10% style="font-size:20px;"><b>ID</b></td>
+                    <td width = 50% style="font-size:20px;"><b>Content</b></td>
+                    <td width=10% style="font-size:20px;"><b>Date range</b></td>
+                    <td width=10% style="font-size:20px;"><b>Type</b></td>
+                    <td width=10% style="font-size:20px;"><b>Collection</b></td></tr>
+                {% for result in results %}
+                    <tr><td><a href="#" onclick="detail({{result['id']}})">{{result["id"]}}</a></td><td>{{result["detail"]}}</td><td>{{result["date"]}}</td><td>{{result["type"]}}</td><td>{{result["collection"]}}</td></tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+     </div>
+    <div id="bottomBanner">
+	International Research: Nazi-Era Cultural Property &gt;</div>
+    <div id="footer">
+
+<!--stopindex-->
+
+<div class="menu connect">
+
+<h3>Connect With Us</h3>
+<ul>
+	<li>
+		<a href="/social-media/blogs.html" title="Blogs">
+		<img src="static/icon-blogs.gif" alt="Go to blog">
+		Blogs
+		</a>
+	</li>
+ 	<li>
+		<a href="/social-media/facebook.html" title="Facebook">
+		<img src="static/icon-facebook.gif" alt="Go to Facebook">
+		Facebook
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/flickr.html" title="Flickr">
+		<img src="static/icon-flickr.gif" alt="Go to Flickr">
+		Flickr
+		</a>
+	</li>
+    <!--
+	<li>
+		<a href="/global-pages/exit.html?link=http://naraopengov.ideascale.com" title="IdeaScale">
+		<img src="/global-images/icons/connect/icon-ideascale.gif" alt="Go to IdeaScale" />
+		IdeaScale
+		</a>
+	</li>-->
+	<li>
+		<a href="/social-media/rss-feeds.html" title="RSS Feeds">
+		<img src="static/icon-rss-feeds.gif" alt="Get RSS Feed">
+		RSS Feeds
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/twitter.html" title="Twitter">
+		<img src="static/icon-twitter-2.gif" alt="Go to Twitter">
+		Twitter
+		</a>
+	</li>
+	<li>
+		<a href="/social-media/youtube.html" title="YouTube">
+		<img src="static/icon-youtube.gif" alt="Go to YouTube">
+		YouTube
+		</a>
+	</li>
+    <li>
+   	<a href="/social-media/">More...</a></li>
+</ul>
+</div>
+<div class="menu">
+
+<div>
+    <h3>Online Research</h3>
+    <ul>
+      <li><a href="/research/topics/">By Topic</a></li>
+      <li><a href="/research/start/by-format.html">By Media Type</a></li>
+      <li><a href="/research/start/by-organization.html">By Government Organization</a></li>
+       <li><a href="/research/search/">Online Catalog</a></li>
+      <li><a href="/presidential-libraries/research/">Presidential Materials</a></li>
+      <li><a href="http://aad.archives.gov/aad/">Access to Archival Databases</a></li>
+
+      <li><a href="/research/alic/">Archives Library Information Center</a></li>
+      <li><a href="/exhibits/">Online Exhibits</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Resources For…</h3>
+    <ul>
+      <li><a href="/research/genealogy/">Genealogists</a></li>
+     <li><a href="/research/military/">Military Historians</a></li>
+     <li> <a href="/preservation">Preservation and Archives Professionals</a></li>
+     <li><a href="/records-mgmt">Records Managers</a></li>
+    <li><a href="/research/military/veterans/">Veterans</a></li>
+    </ul>
+
+  </div>
+  <div>
+    <h3>Research Guides</h3>
+    <ul>
+      <li><a href="/research/start/">Getting Started</a></li>
+      <li><a href="/research/guide-fed-records/">Guide to Federal Records</a></li>
+      <li><a href="/research/declassification.html">Declassified Records</a></li>
+      <li><a href="/research/start/online-tools.html">Where to Look for Records</a></li>
+      <li><a href="/research/start/">Why Aren't All Records Online?</a></li>
+    </ul>
+  </div>
+  <div>
+      <h3>What's New</h3>
+    <ul>
+      <li><a href="/research/news.html">News and Notices</a></li>
+      <li><a href="/research/accessions/">New Acquisitions</a></li>
+      <li><a href="/research/newsletter/">Researcher News: Newsletter</a></li>
+    </ul>
+
+
+  </div></div>
+</div>
+</div>
+</body>
+</html>

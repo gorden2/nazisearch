@@ -1,0 +1,14 @@
+{% extends "adsearch.html" %}
+{% block body2 %}
+<table border="1" width=100% style="text-align:center;">
+    <tr>
+        <td width=10% style="font-size:20px;"><b>id</b></td>
+        <td width = 70% style="font-size:20px;"><b>content</b></td>
+        <td width=10% style="font-size:20px;"><b>date range</b></td>
+        <td width=10% style="font-size:20px;"><b>type</b></td></tr>
+    {% for result in results %}
+    <tr><td>{{result["id"]}}</td><td>{{result["detail"]}}</td><td>{{result["date"]}}</td><td>{{result["type"]}}</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
